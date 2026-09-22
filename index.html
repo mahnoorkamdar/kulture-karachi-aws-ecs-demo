@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kulture Karachi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #1a1a1a;
+      --mid:    #5a5a5a;
+      --muted:  #9a9a9a;
+      --rule:   #e0dbd4;
+      --bg:     #f9f7f4;
+      --paper:  #ffffff;
+      --accent: #c0392b;
+      --accent2:#2c3e50;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4vw;
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-left {
+      padding: 6rem 4vw 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--rule);
+    }
+    .hero-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.08;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.75rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-body {
+      font-size: 1rem;
+      color: var(--mid);
+      max-width: 38ch;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      transition: background 0.2s;
+    }
+    .hero-cta:hover { background: var(--accent); }
+
+    .hero-right {
+      background: var(--accent2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 4vw;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-image:
+        repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+      background-size: 30px 30px;
+    }
+    .hero-stat-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .stat-block {
+      background: rgba(255,255,255,0.06);
+      padding: 1.75rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+    }
+    .hero-city {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 9vw, 7rem);
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: -0.02em;
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--accent);
+      overflow: hidden;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 4rem;
+      animation: scroll 22s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-inner span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .ticker-inner span::before {
+      content: '◆';
+      margin-right: 1rem;
+      opacity: 0.6;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* EVENTS */
+    .section { padding: 5rem 4vw; }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1rem;
+      margin-bottom: 3rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .section-link {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .section-link:hover { text-decoration: underline; }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--rule);
+    }
+    .event-card {
+      background: var(--paper);
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: background 0.2s;
+    }
+    .event-card:hover { background: var(--bg); }
+    .event-date {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+    .event-venue {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .event-tag {
+      margin-top: auto;
+      display: inline-block;
+      border: 1px solid var(--rule);
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+      width: fit-content;
+      text-transform: uppercase;
+    }
+
+    /* ABOUT STRIP */
+    .about-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .about-left {
+      padding: 5rem 4vw;
+      border-right: 1px solid var(--rule);
+    }
+    .about-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .about-left p {
+      font-size: 0.95rem;
+      color: var(--mid);
+      max-width: 42ch;
+      line-height: 1.8;
+    }
+    .about-right {
+      padding: 5rem 4vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .pillar h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+    .pillar p {
+      font-size: 0.82rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 4vw;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper);
+    }
+    .footer-left {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+    }
+    .footer-left span { color: var(--accent); }
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .cloud-badge {
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.75rem;
+      text-transform: uppercase;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { min-height: 300px; }
+      .hero-city { display: none; }
+      .events-grid { grid-template-columns: 1fr; }
+      .about-strip { grid-template-columns: 1fr; }
+      .about-right { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-inner { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Kulture<span>.</span>Karachi</a>
+    <ul class="nav-links">
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Neighborhoods</a></li>
+      <li><a href="#">Community</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Karachi's Cultural Pulse</p>
+      <h1 class="hero-title">Where the city<br>comes <em>alive.</em></h1>
+      <p class="hero-body">
+        Discover art exhibitions, music nights, food festivals, and community gatherings happening across Karachi — curated for people who actually live here.
+      </p>
+      <a href="#" class="hero-cta">Browse Events</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-pattern"></div>
+      <span class="hero-city">KHI</span>
+      <div class="hero-stat-grid">
+        <div class="stat-block">
+          <div class="stat-num">240+</div>
+          <div class="stat-label">Events this month</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">18</div>
+          <div class="stat-label">Neighborhoods covered</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">6k</div>
+          <div class="stat-label">Community members</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Always & forever</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span>Art Exhibitions</span>
+      <span>Live Music</span>
+      <span>Food Festivals</span>
+      <span>Theatre</span>
+      <span>Community Markets</span>
+      <span>Photography Walks</span>
+      <span>Book Fairs</span>
+      <span>Open Mics</span>
+      <span>Art Exhibitions</span>
+      <span>Live Music</span>
+      <span>Food Festivals</span>
+      <span>Theatre</span>
+      <span>Community Markets</span>
+      <span>Photography Walks</span>
+      <span>Book Fairs</span>
+      <span>Open Mics</span>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Upcoming Events</h2>
+      <a href="#" class="section-link">View all events</a>
+    </div>
+    <div class="events-grid">
+      <div class="event-card">
+        <span class="event-date">Fri, 20 Sep 2026</span>
+        <h3 class="event-name">Karachi Biennale Opening Night</h3>
+        <p class="event-venue">Frere Hall, Saddar</p>
+        <span class="event-tag">Visual Art</span>
+      </div>
+      <div class="event-card">
+        <span class="event-date">Sat, 21 Sep 2026</span>
+        <h3 class="event-name">Clifton Night Market</h3>
+        <p class="event-venue">Clifton Beach Promenade</p>
+        <span class="event-tag">Food & Market</span>
+      </div>
+      <div class="event-card">
+        <span class="event-date">Sun, 22 Sep 2026</span>
+        <h3 class="event-name">Jazz Under the Stars</h3>
+        <p class="event-venue">Arts Council of Pakistan</p>
+        <span class="event-tag">Live Music</span>
+      </div>
+      <div class="event-card">
+        <span class="event-date">Thu, 26 Sep 2026</span>
+        <h3 class="event-name">Old City Photography Walk</h3>
+        <p class="event-venue">Meets at Empress Market</p>
+        <span class="event-tag">Photography</span>
+      </div>
+      <div class="event-card">
+        <span class="event-date">Fri, 27 Sep 2026</span>
+        <h3 class="event-name">Indie Fiction Book Fair</h3>
+        <p class="event-venue">T2F, Sunset Boulevard</p>
+        <span class="event-tag">Literature</span>
+      </div>
+      <div class="event-card">
+        <span class="event-date">Sat, 28 Sep 2026</span>
+        <h3 class="event-name">Open Mic Karachi</h3>
+        <p class="event-venue">Canvas Gallery, Clifton</p>
+        <span class="event-tag">Open Mic</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="about-strip">
+    <div class="about-left">
+      <h2>Built for Karachi,<br>by Karachi.</h2>
+      <p>
+        Kulture Karachi is a community-run platform that maps the city's cultural life in one place. No PR fluff — just real events, real venues, and real people who care about this city.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="pillar">
+        <h4>Discover</h4>
+        <p>Events from across all neighborhoods, not just Defence and Clifton.</p>
+      </div>
+      <div class="pillar">
+        <h4>Connect</h4>
+        <p>Find your crowd — artists, readers, musicians, foodies, wanderers.</p>
+      </div>
+      <div class="pillar">
+        <h4>Share</h4>
+        <p>Submit your own event and reach thousands of engaged locals.</p>
+      </div>
+      <div class="pillar">
+        <h4>Explore</h4>
+        <p>Neighborhood guides, venue profiles, and hidden corners of KHI.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">Kulture<span>.</span>Karachi</div>
+    <p class="footer-note">© 2026 · Karachi, Pakistan · Deployed on AWS ECS Fargate</p>
+    <span class="cloud-badge">Running on AWS</span>
+  </footer>
+
+</body>
+</html>
